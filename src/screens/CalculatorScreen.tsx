@@ -1,14 +1,24 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Text, View} from "react-native";
 import {styles} from "../theme/appTheme";
 import ButtonCalc from "../components/ButtonCalc";
+
+enum Opetators {
+  sumar,
+  restar,
+  multiplicar,
+  dividir,
+}
 
 const CalculatorScreen = () => {
   const [previousNumber, setPreviousNumber] = useState("0");
   const [number, setNumber] = useState("0");
 
+  const lastOperation = useRef<Opetators>();
+
   const clean = () => {
     setNumber("0");
+    setPreviousNumber("0");
   };
 
   const buildNumber = (numberText: string) => {
@@ -58,9 +68,41 @@ const CalculatorScreen = () => {
     }
   };
 
+  const changeNumberToPrevious = () => {
+    if (number.endsWith(".")) {
+      setPreviousNumber(number.slice(0, -1));
+    } else {
+      setPreviousNumber(number);
+    }
+
+    setNumber("0");
+  };
+
+  const btnDividir = () => {
+    changeNumberToPrevious();
+    lastOperation.current = Opetators.dividir;
+  };
+
+  const btnMultiplicar = () => {
+    changeNumberToPrevious();
+    lastOperation.current = Opetators.multiplicar;
+  };
+
+  const btnSumar = () => {
+    changeNumberToPrevious();
+    lastOperation.current = Opetators.sumar;
+  };
+
+  const btnRestar = () => {
+    changeNumberToPrevious();
+    lastOperation.current = Opetators.restar;
+  };
+
   return (
     <View style={styles.calculatorContainer}>
-      <Text style={styles.smallResult}>{previousNumber}</Text>
+      {previousNumber !== "0" && (
+        <Text style={styles.smallResult}>{previousNumber}</Text>
+      )}
       <Text style={styles.text}>{number}</Text>
 
       {/* Row of buttons  */}
@@ -83,7 +125,7 @@ const CalculatorScreen = () => {
           textColor="black"
           action={deleteNumber}
         />
-        <ButtonCalc title="/" color="secondary" action={clean} />
+        <ButtonCalc title="/" color="secondary" action={btnDividir} />
       </View>
 
       {/* Row of buttons  */}
@@ -91,7 +133,7 @@ const CalculatorScreen = () => {
         <ButtonCalc title="1" action={buildNumber} />
         <ButtonCalc title="2" action={buildNumber} />
         <ButtonCalc title="3" action={buildNumber} />
-        <ButtonCalc title="x" color="secondary" action={clean} />
+        <ButtonCalc title="x" color="secondary" action={btnMultiplicar} />
       </View>
 
       {/* Row of buttons  */}
@@ -99,7 +141,7 @@ const CalculatorScreen = () => {
         <ButtonCalc title="4" action={buildNumber} />
         <ButtonCalc title="5" action={buildNumber} />
         <ButtonCalc title="6" action={buildNumber} />
-        <ButtonCalc title="-" color="secondary" action={clean} />
+        <ButtonCalc title="-" color="secondary" action={btnRestar} />
       </View>
 
       {/* Row of buttons  */}
@@ -107,7 +149,7 @@ const CalculatorScreen = () => {
         <ButtonCalc title="7" action={buildNumber} />
         <ButtonCalc title="8" action={buildNumber} />
         <ButtonCalc title="9" action={buildNumber} />
-        <ButtonCalc title="+" color="secondary" action={clean} />
+        <ButtonCalc title="+" color="secondary" action={btnSumar} />
       </View>
 
       {/* Row of buttons  */}
