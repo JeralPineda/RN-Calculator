@@ -1,21 +1,32 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 interface ButtonCalcProps {
   title: string;
   color?: "primary" | "secondary" | "dark";
   textColor?: "black" | "white";
+  width?: boolean;
 }
 
 const ButtonCalc = ({
   title,
   color = "dark",
   textColor = "white",
+  width = false,
 }: ButtonCalcProps) => {
   return (
-    <View style={[styles.button, styles[color]]}>
-      <Text style={[styles.buttonText, styles[textColor]]}>{title}</Text>
-    </View>
+    <TouchableOpacity activeOpacity={0.7}>
+      <View style={[styles.button, styles[color], width && styles.width]}>
+        <Text
+          style={[
+            styles.buttonText,
+            styles[textColor],
+            width && styles.textStart,
+          ]}>
+          {title}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,6 +47,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#fff",
     fontWeight: "400",
+  },
+  width: {
+    width: 180,
+  },
+  textStart: {
+    textAlign: "left",
+    marginLeft: 20,
   },
 
   //* Colors
