@@ -50,6 +50,14 @@ const CalculatorScreen = () => {
     }
   };
 
+  const deleteNumber = () => {
+    if (number.length === 1 || (number.length === 2 && number.includes("-"))) {
+      setNumber("0");
+    } else {
+      setNumber(number.slice(0, -1));
+    }
+  };
+
   return (
     <View style={styles.calculatorContainer}>
       <Text style={styles.smallResult}>{previousNumber}</Text>
@@ -73,7 +81,7 @@ const CalculatorScreen = () => {
           title="del"
           color="primary"
           textColor="black"
-          action={clean}
+          action={deleteNumber}
         />
         <ButtonCalc title="/" color="secondary" action={clean} />
       </View>
