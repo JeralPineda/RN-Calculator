@@ -6,6 +6,7 @@ interface ButtonCalcProps {
   color?: "primary" | "secondary" | "dark";
   textColor?: "black" | "white";
   width?: boolean;
+  action: (numberText: string) => void;
 }
 
 const ButtonCalc = ({
@@ -13,16 +14,18 @@ const ButtonCalc = ({
   color = "dark",
   textColor = "white",
   width = false,
+  action,
 }: ButtonCalcProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.7}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => action(title)}>
       <View style={[styles.button, styles[color], width && styles.width]}>
         <Text
           style={[
             styles.buttonText,
             styles[textColor],
             width && styles.textStart,
-          ]}>
+          ]}
+          adjustsFontSizeToFit>
           {title}
         </Text>
       </View>
