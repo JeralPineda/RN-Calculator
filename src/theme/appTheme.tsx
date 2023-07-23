@@ -5,8 +5,26 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+  calculatorContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: "flex-end",
+  },
   text: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 60,
+    textAlign: "right",
+  },
+  smallResult: {
+    color: "rgba(255, 255, 255, 0.5)",
+    fontSize: 30,
+    textAlign: "right",
+    marginBottom: -8,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 18,
+    paddingHorizontal: 10,
   },
 });
