@@ -12,7 +12,42 @@ const CalculatorScreen = () => {
   };
 
   const buildNumber = (numberText: string) => {
-    setNumber(number + numberText);
+    //No aceptar mas de un punto
+
+    if (number.includes(".") && numberText === ".") {
+      return;
+    }
+
+    if (number.startsWith("0") || number.startsWith("-0")) {
+      // Punto decimal
+      if (numberText === ".") {
+        setNumber(number + numberText);
+
+        //Evaluar si es otro cero, y hay un punto
+      } else if (numberText === "0" && number.includes(".")) {
+        setNumber(number + numberText);
+
+        // Evaluar si es diferente de 0 y no tiene un punto
+      } else if (numberText !== "0" && !number.includes(".")) {
+        setNumber(numberText);
+
+        //Evitar 000.000
+      } else if (numberText === "0" && !number.includes(".")) {
+        setNumber(number);
+      } else {
+        setNumber(number + numberText);
+      }
+    } else {
+      setNumber(number + numberText);
+    }
+  };
+
+  const positiveOrNegative = () => {
+    if (number.includes("-")) {
+      setNumber(number.replace("-", ""));
+    } else {
+      setNumber("-" + number);
+    }
   };
 
   return (
@@ -32,7 +67,7 @@ const CalculatorScreen = () => {
           title="+/-"
           color="primary"
           textColor="black"
-          action={clean}
+          action={positiveOrNegative}
         />
         <ButtonCalc
           title="del"
