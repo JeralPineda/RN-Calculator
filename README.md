@@ -1,6 +1,6 @@
 # Calculadora con React Native y TypeScript
 
-  <image src='./src/assets/calculadora-ios.jpeg' alt='Example' width='300' height='800' />
+  <image src='./src/assets/calculadora-ios.jpeg' alt='Example' width='300' />
 
 ## Instalar App pasos:
 
